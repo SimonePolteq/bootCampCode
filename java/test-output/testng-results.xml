@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default Suite" duration-ms="8632" started-at="2017-12-27T12:56:29Z" finished-at="2017-12-27T12:56:37Z">
+    <groups>
+    </groups>
+    <test name="bootcamp" duration-ms="8632" started-at="2017-12-27T12:56:29Z" finished-at="2017-12-27T12:56:37Z">
+      <class name="exercises.FirstSeleniumTest">
+        <test-method status="PASS" signature="logInSuccessFull()[pri:0, instance:exercises.FirstSeleniumTest@4563e9ab]" name="logInSuccessFull" duration-ms="8586" started-at="2017-12-27T13:56:29Z" finished-at="2017-12-27T13:56:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logInSuccessFull -->
+      </class> <!-- exercises.FirstSeleniumTest -->
+      <class name="exercises.HelloWorldTest">
+        <test-method status="PASS" signature="printText()[pri:0, instance:exercises.HelloWorldTest@11531931]" name="printText" duration-ms="1" started-at="2017-12-27T13:56:37Z" finished-at="2017-12-27T13:56:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- printText -->
+      </class> <!-- exercises.HelloWorldTest -->
+      <class name="exercises.AboutMethods">
+        <test-method status="PASS" signature="printProduct()[pri:0, instance:exercises.AboutMethods@5a01ccaa]" name="printProduct" duration-ms="10" started-at="2017-12-27T13:56:29Z" finished-at="2017-12-27T13:56:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- printProduct -->
+        <test-method status="PASS" signature="printProductTwo()[pri:0, instance:exercises.AboutMethods@5a01ccaa]" name="printProductTwo" duration-ms="0" started-at="2017-12-27T13:56:29Z" finished-at="2017-12-27T13:56:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- printProductTwo -->
+      </class> <!-- exercises.AboutMethods -->
+    </test> <!-- bootcamp -->
+  </suite> <!-- Default Suite -->
+</testng-results>
