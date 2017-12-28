@@ -4,11 +4,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BootCamp
 {
     [TestClass]
-    public class UnitTest2
+    public class HelloWorld
     {
         [TestMethod]
         public void TestMethod1()
         {
+            Console.WriteLine("hello World");
         }
+
+
+        
     }
 }
