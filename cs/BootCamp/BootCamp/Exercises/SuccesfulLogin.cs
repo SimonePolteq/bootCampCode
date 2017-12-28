@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace BootCamp.Exercises
 {
@@ -10,13 +11,12 @@ namespace BootCamp.Exercises
         [TestMethod]
         public void LogInSuccessFull()
         {
-            //open the website
-            String Url = "https://techblog.polteq.com/testshop/index.php";
-            OpenQA.Selenium.IWebDriver driver = new OpenQA.Selenium.Chrome.ChromeDriver();
-            //niet vergeten:
+            //start browser
+            IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(Url);
-            //of: driver.URL = <Url>;
+
+            //goto website
+            driver.Url="https://techblog.polteq.com/testshop/index.php";
 
             //Click on the login link
             IWebElement LogInLink = driver.FindElement(By.ClassName("login"));
@@ -30,8 +30,7 @@ namespace BootCamp.Exercises
             Password.SendKeys("bootcamp");
 
             //Click login button
-            IWebElement SubmitLogin = driver.FindElement(By.Id("SubmitLogin"));
-            SubmitLogin.Click();
+            driver.FindElement(By.Id("SubmitLogin")).Click();
 
             //validate result
             IWebElement PageHeading = driver.FindElement(By.ClassName("page-heading"));

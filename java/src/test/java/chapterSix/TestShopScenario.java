@@ -11,17 +11,17 @@ public class TestShopScenario {
     protected WebDriver driver;
 
     @BeforeTest
-    public void initialize() {
-        String url = "https://techblog.polteq.com/testshop/index.php";
+    public void setUp() {
         ChromeDriverManager.getInstance().setup();
         driver = new ChromeDriver();
-        driver.get(url);
+
+        //open the website
+        driver.get("https://techblog.polteq.com/testshop/index.php");
         driver.manage().window().maximize();
     }
 
     @AfterTest
     public void tearDown() {
-        System.out.println(" it is time to quit!");
-        //driver.quit();
+        driver.quit();
     }
 }

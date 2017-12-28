@@ -12,7 +12,7 @@ public class EmptyCartTest extends TestShopScenario {
     @Test
     public void FillCart() {
         login();
-        
+
         //element alleen displayed indien leeg
         boolean isEmpty = driver.findElement(By.className("ajax_cart_no_product")).isDisplayed();
         if (isEmpty) {

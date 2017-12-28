@@ -10,23 +10,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class SignOutTest {
-
-    WebDriver driver;
-
-    @BeforeTest
-    private void initialize() {
-        String url = "https://techblog.polteq.com/testshop/index.php";
-        ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
-        driver.get(url);
-        driver.manage().window().maximize();
-    }
-
-    @AfterTest
-    private void tearDown() {
-        driver.quit();
-    }
+public class SignOutTest extends TestShopScenario{
 
     @Test
     public void logInLogOutSuccesfull() {
@@ -41,7 +25,8 @@ public class SignOutTest {
         Assertions.assertThat(pageHeaderTextActual).as("Check visbility of My Account Page").isEqualToIgnoringCase(pageHeaderTextExpected); //h1 wordt hoofdletter
 
         //Check logged in
-        //TODO test op de tekst van header_user_info
+        //TODO test op de tekst van header_user_info want dat is er altijd, buj ingelogd zelfs 2x
+
 
         //Log uit
         driver.findElement(By.className("logout")).click();
