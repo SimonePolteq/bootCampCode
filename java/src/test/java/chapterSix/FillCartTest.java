@@ -1,30 +1,13 @@
 package chapterSix;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-public class FillCartTest {
-
-    WebDriver driver;
-
-    @BeforeTest
-    private void initialize() {
-        String url = "https://techblog.polteq.com/testshop/index.php";
-        ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
-        driver.get(url);
-        driver.manage().window().maximize();
-    }
-
-    @AfterTest
-    private void tearDown() {
-        driver.quit();
-    }
+public class FillCartTest extends TestShopScenario{
 
     private void login() {
         //TODO met parameters username en pw
@@ -34,22 +17,49 @@ public class FillCartTest {
         driver.findElement(By.id("SubmitLogin")).click();
     }
 
-
     @Test
     public void FillCart() {
         login();
+        //Check logged in
+        //TODO test op de tekst van header_user_info
 
-        //Valider dat cart empty is (tip: gebruik .isDisplayed(), empty is een element opzich)
+        //Valider dat cart empty is
+        System.out.println("aantal producten in cart voor toevoegen=" + driver.findElement(By.className("ajax_cart_no_product")).getText() );
+        String TextActual = driver.findElement(By.className("ajax_cart_no_product")).getText();
+        String TextExpected = "(empty)";
+        String TextError= "Check if cart is empty";
+        Assertions.assertThat(TextActual).as(TextError).isEqualTo(TextExpected);
 
-        //4. Click op <ipod> bij het onderdeel TAGS (Tip: Bouw een CSS locator aan de hand van een attribuut)
+        //Click op <ipod> bij het onderdeel TAGS
+        WebElement ipodTag;
+        ipodTag = (new WebDriverWait(driver, 2)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='More about ipod']")));
+        ipodTag.click();
 
-        // 5. Click op de naam van <iPod shuffle> zodat de product pagina wordt geopened (Tip: bouw een xPath locator aan de hand van de tekst van het element)
+        //Click op de naam van <iPod shuffle> zodat de product pagina wordt geopened
+        WebElement iPodShuffle;
+        iPodShuffle = (new WebDriverWait(driver, 2)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='iPod shuffle']")));
+        //TODO als xpath
+        iPodShuffle.click();
 
-        // 6. Voeg de <iPod Shuffle> toe aan de cart (Tip: na een paar keer vastlopen, kijk hoger in de DOM)
+        //Voeg de <iPod Shuffle> toe aan de cart (Tip: na een paar keer vastlopen, kijk hoger in de DOM)
+        WebElement addToCartButton;
+        addToCartButton = (new WebDriverWait(driver, 2)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[id='add_to_cart']")));
+        addToCartButton.click();
 
-        // 7. Click op de knop continue shopping (tip: title als locator, idem als stap 4, selenium is sneller dan de site wellicht?)
+        //Click op de knop continue shopping
+        //driver.switchTo().
+        WebElement continueShoppingButton;
+        //LET OP!! al wel aanwezig maar nog niet visible does kan je er niet op klikken. Dus andere conditie
+        continueShoppingButton = (new WebDriverWait(driver, 4)).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title='Continue shopping']")));
+        continueShoppingButton.click();
 
-        //  8. Valideer dat er nu 1 product zich in de cart bevindt (tip: nummer is een element opzich)
+        //Valideer dat er nu 1 product zich in de cart bevindt
+        //TODO element definieren
+        System.out.println("aantal producten in cart na toevoegen =" + driver.findElement(By.cssSelector("[class='ajax_cart_quantity unvisible']")).getText() );
+        Assertions.assertThat(driver.findElement(By.cssSelector("[class='ajax_cart_quantity unvisible']")).getText()).
+                as("Check if cart contains 1 product").
+                isEqualTo("1");
+
     }
 }
 
