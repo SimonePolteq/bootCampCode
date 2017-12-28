@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class Controles {
 
     @Test
-    public void checkTextContainsTextPass(){
+    public void assertStringContains(){
        String textExpected = "this Is An Exercise";
        Assertions.assertThat(textExpected).as("this is the text shown when test fails").contains("Exercise");
     }
@@ -18,9 +18,9 @@ public class Controles {
     }
 
     @Test
-    public void checkBoolean() {
-        boolean checkBoolean=true;
-        Assertions.assertThat(checkBoolean).as("selection is false").isFalse();
+    public void assertBoolean() {
+        boolean testBoolean=true;
+        Assertions.assertThat(testBoolean).as("selection is false").isFalse();
     }
 
     @Test
