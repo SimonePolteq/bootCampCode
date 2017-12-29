@@ -22,6 +22,6 @@ public class TestShopScenario {
 
     @AfterTest
     public void tearDown() {
-        driver.quit();
+       // driver.quit();
     }
 }

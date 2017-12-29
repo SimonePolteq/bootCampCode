@@ -10,8 +10,10 @@ import org.testng.annotations.Test;
 public class EmptyCartTest extends TestShopScenario {
 
     @Test
+    //OEFENING 6.0.3
     public void FillCart() {
-        login();
+
+        login("simone.russchen@polteq.com", "bootcamp");
 
         //element alleen displayed indien leeg
         boolean isEmpty = driver.findElement(By.className("ajax_cart_no_product")).isDisplayed();
@@ -35,19 +37,18 @@ public class EmptyCartTest extends TestShopScenario {
         //Valideer dat de cart nu leeg is
         String TextActual = driver.findElement(By.className("ajax_cart_no_product")).getText();
         String TextExpected = "(empty)";
-        String TextError= "Check if cart is empty";
+        String TextError = "Check if cart is empty";
         Assertions.assertThat(TextActual).as(TextError).isEqualTo(TextExpected);
     }
 
-        private void login() {
-            //TODO met parameters username en pw
-            driver.findElement(By.className("login")).click();
-            driver.findElement(By.id("email")).sendKeys("simone.russchen@polteq.com");
-            driver.findElement(By.id("passwd")).sendKeys("bootcamp");
-            driver.findElement(By.id("SubmitLogin")).click();
-        }
+    private void login(String email, String password) {
+        driver.findElement(By.className("login")).click();
+        driver.findElement(By.id("email")).sendKeys(email);
+        driver.findElement(By.id("passwd")).sendKeys(password);
+        driver.findElement(By.id("SubmitLogin")).click();
+    }
 
-        private void addProductToCart() {
+        private void addProductToCart () {
             //Click op <ipod> bij het onderdeel TAGS
             WebElement ipodTag;
             ipodTag = (new WebDriverWait(driver, 2)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='More about ipod']")));

@@ -16,22 +16,24 @@ public class conditionExercises {
 
         //check if participant is old enough and not to old
         for(int i=0; i< testData.size(); i++) {
-            System.out.println("test met age= " +testData.get(i));
-            bootcampAgeChecker(testData.get(i));
+            System.out.println("test with age= " +testData.get(i));
+            String tekst=bootcampAgeChecker(testData.get(i));
+            System.out.println(tekst);
         }
     }
 
-    private void bootcampAgeChecker(int age) {
-
+    private String bootcampAgeChecker(int age) {
+        String outputText;
         if (age>=21 && age<65){
-            System.out.println("    deelnemer toegelaten");
+            outputText="deelnemer toegelaten";
         }
         else if (age>=65){
-            System.out.println("    deelnemer niet toegelaten, check bij de manager");
+            outputText="deelnemer niet toegelaten, check bij de manager";
         }
         else {
-            System.out.println("    deelnemer is te jong");
+            outputText="deelnemer is te jong";
         }
+        return outputText;
     }
 
     private void createListWithAges() {

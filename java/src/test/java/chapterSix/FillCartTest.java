@@ -18,10 +18,9 @@ public class FillCartTest extends TestShopScenario{
     }
 
     @Test
+    //OEFENING 6.0.2
     public void FillCart() {
         login();
-        //Check logged in
-        //TODO test op de tekst van header_user_info
 
         //Valider dat cart empty is
         System.out.println("aantal producten in cart voor toevoegen=" + driver.findElement(By.className("ajax_cart_no_product")).getText() );
