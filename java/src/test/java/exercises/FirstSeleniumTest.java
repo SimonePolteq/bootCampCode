@@ -35,7 +35,6 @@ public class FirstSeleniumTest {
         //dus check op page heading
         WebElement pageHeading=driver.findElement(By.className("page-heading"));  //element als variabele en hier kan je dus de tekst van opvragen
         String pageHeaderTextActual=pageHeading.getText();
-
         String pageHeaderTextExpected="My account";
         Assertions.assertThat(pageHeaderTextActual).as("Check visbility of My Account Page").isEqualToIgnoringCase(pageHeaderTextExpected); //h1 wordt hoofdletters does ignore case
 
