@@ -41,7 +41,7 @@ public class ContactUsPage {
         Select dropdown = new Select(subjectHeading);
         dropdown.selectByVisibleText(subject);
 
-        //of: new Select(subjectHeading).selectByVisibleText(subject);
+        //of in 1 regel: new Select(subjectHeading).selectByVisibleText(subject);
 
         emailField.sendKeys(email);
         orderReferenceField.sendKeys(orderReference);
@@ -50,8 +50,6 @@ public class ContactUsPage {
     }
 
     public boolean isVisibleSuccessMessage() {
-
-        //werkt niet: return new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOfElementLocated( succesMessage.isDisplayed() ));
         return succesMessage.isDisplayed();
     }
 }
