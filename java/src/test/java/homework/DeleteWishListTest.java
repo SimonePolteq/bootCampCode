@@ -2,9 +2,8 @@ package homework;
 
 import chapterNine.TestShopScenarioAdvanced;
 import org.assertj.core.api.Assertions;
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-import pages.HeadAllPagesPage;
+import pages.PageHeaderPage;
 import pages.HomePage;
 import pages.MyWishlistsPage;
 
@@ -15,8 +14,7 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
 
         HomePage homePage = new HomePage(driver);
         MyWishlistsPage myWishlistsPage = new MyWishlistsPage(driver);
-        //todo betere naam verzinnen
-        HeadAllPagesPage headAllPagesPage = new HeadAllPagesPage(driver);
+        PageHeaderPage headAllPagesPage = new PageHeaderPage(driver);
 
         String wishlist = "Testje"; //todo must wishlist <Feel the pain>
 
@@ -31,12 +29,13 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
                 .isEqualToIgnoringCase("My wishlists");
 
         //Check if wishlist is available, otherwise create
+        System.out.println("check of wishlist er al is");
         if (myWishlistsPage.isPresentWishlist(wishlist)) {
-            System.out.println("wishlist is already available, no need to creare");
+            System.out.println("wishlist " + wishlist + " is already available, so no need to create");
         }
         else {
-            System.out.println("create wishlist:" +wishlist);
-            myWishlistsPage.createWishlist(wishlist);
+            System.out.println("wishlist " + wishlist + " not already there, so need to cerate it"); //todo weghalen
+            myWishlistsPage.createNewWishlist(wishlist);
             Assertions.assertThat(myWishlistsPage.isPresentWishlist(wishlist)).as("Wishlist " + wishlist + "should have been added").isTrue();
         }
 
@@ -44,7 +43,7 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
         myWishlistsPage.deleteWishlist(wishlist);
 
         //Check deletion was succesfull
-        Assertions.assertThat(myWishlistsPage.isPresentWishlist(wishlist)).as("Wishlist " + wishlist + "should have been deleted").isFalse();
-    }//end of test
+       //TODO comment weghalen Assertions.assertThat(myWishlistsPage.isPresentWishlist(wishlist)).as("Wishlist " + wishlist + "should have been deleted").isFalse();
+    }
 }
 

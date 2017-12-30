@@ -4,11 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class HeadAllPagesPage {
+public class PageHeaderPage {
 
     private WebDriver driver;
 
-    public HeadAllPagesPage(WebDriver driver) {
+    public PageHeaderPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

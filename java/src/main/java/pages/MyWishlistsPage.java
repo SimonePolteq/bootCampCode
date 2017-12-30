@@ -18,14 +18,11 @@ public class MyWishlistsPage {
     public MyWishlistsPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        //todo weghalen of anders maken
-        createLists();
     }
 
     private List<String> rowTableBodyHeaders;
 
     //elements
-
     @FindBy(xpath = "//h1[@class='page-heading']")
     private WebElement pageHeader;
 
@@ -39,69 +36,78 @@ public class MyWishlistsPage {
     private WebElement submitWishlistButton;
 
     //todo nodig?
-    @FindBy(xpath = "//table[@class='table table-bordered']/tbody/th")
-    private WebElement column;
+    @FindBy(xpath = "//table[@class='table table-bordered']//th")
+    private WebElement allColumns;
 
     //todo nodig?
-    @FindBy(xpath = "//table[@class='table table-bordered']/tbody/tr")
-    private WebElement row;
+    @FindBy(xpath = "//table[@class='table table-bordered']//tr")
+    private WebElement allRows;
 
     //methods
     public String getTextPageHeading() {
           return pageHeader.getText();
     }
 
-    public void createWishlist(String wishlist) {
+    public void createNewWishlist(String wishlist) {
         System.out.println("now create the wishlist");
         wishlistField.sendKeys(wishlist);
         submitWishlistButton.click();
     }
 
     public boolean isPresentWishlist(String wishlist) {
-        //todo
-        // todo gebruik WebTables voor zoeken
+        List<String> rowsList= createArrayListOfRowsHeaders();
+
         boolean isPresent = false;
-            for (int i=0; i < rowTableBodyHeaders.size();i++) {
-                if (rowTableBodyHeaders.get(i).equals(wishlist)) {
+             for (int i=0; i < rowsList.size();i++) {
+                if (rowsList.get(i).equals(wishlist)) {
                     isPresent = true;
-                    //todo break als gevonden
+                      //todo break als gevonden
                 }
-            }//end for statement
-        return isPresent;
+            }
+         return isPresent;
     }
 
-    public void deleteWishlist(String wishList) {
-        //todo
-        System.out.println("de code voor deleting wishlist moet nog worden geschreven");
+    private int getRowNumber(String wishlist) {
+        //todo moet ik deze echt steeds opnieuw maken
+        List<String> rows= createArrayListOfRowsHeaders();
+        int rowNumber=0;
+        for (int i=0; i < rows.size();i++) {
+            if (rows.get(i).equals(wishlist)) {
+                rowNumber=i+1;
+                //todo break als gevonden
+                System.out.println(wishlist + " is in row number:" + rowNumber);
+            }
+        }
+
+        return rowNumber;
     }
 
-
-    private void createLists() {
+    private List<String> createArrayListOfRowsHeaders() {
+        //todo nog met hiervboven gedefineerde elementen
         //count number of rows and print to console
         List<WebElement> rows = driver.findElements(By.xpath("//table[@class='table table-bordered']//tr"));
         System.out.println("number of rows in table= " + rows.size());
 
-        //count number of colums and print to console
-        List<WebElement> columns = driver.findElements(By.xpath("//table[@class='table table-bordered']//th"));
-        System.out.println("numbers of colums in table=" + columns.size());
-
-        //omdat ik het nog even niet weet hoe direct te extracten maak ik lijst met de strings
-        //create list and print column headers to console
-        List<String> columnHeaders = new ArrayList<>();
-        for (int i = 0; i < columns.size(); i++) {
-            String xpath = "//table//th[" + (i + 1) + "]";
-            columnHeaders.add(driver.findElement(By.xpath(xpath)).getText());
-            //print
-            System.out.println("column nr" + (i + 1) + " = " + columnHeaders.get(i));
-        }
-
-        //create list and print row headers to console
-        rowTableBodyHeaders = new ArrayList<>();
+        //create list with headers and print row headers to console
+        //todo row numbers hier is lelijk
+        List<String> rowsHeaders = new ArrayList<>();
         for (int i = 1; i < rows.size(); i++) {
-            String xpath = "//table/tbody//tr[" + i + "]//a";
-            rowTableBodyHeaders.add(driver.findElement(By.xpath(xpath)).getText());
+            rowsHeaders.add(driver.findElement(By.xpath("//table/tbody//tr[" + i + "]//a")).getText());
             //print tablebody
-            System.out.println("row nr" + i + " = " + rowTableBodyHeaders.get(i-1));//because body starts at 2nd row
+            //System.out.println("row nr" + i + " = " + rowsHeaders.get(i-1));//because body starts at 2nd row
         }
+        return rowsHeaders;
     }
+
+
+    public void deleteWishlist(String wishlist) {
+        int rowNumber = getRowNumber(wishlist);
+        System.out.println("delete row:" + rowNumber);
+        driver.findElement(By.xpath("//table/tbody/tr[" + rowNumber + "]//i[@class='icon-remove']")).click();
+        //todo switch naar popup
+        driver.switchTo();
+    }
+
 }
+
+
