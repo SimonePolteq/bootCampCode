@@ -14,13 +14,19 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    //elementen
+    //elements
     @FindBy(css ="a[title='Contact us']")
     private WebElement contactUsLink;
 
+    @FindBy(xpath = "//i[@class='icon-heart']")
+    private WebElement myWishListsIcon;
 
-    //methodes
+    //methods
     public void selectContactUs() {
         contactUsLink.click();
+    }
+
+    public void selectMyWishLists() {
+        myWishListsIcon.click();
     }
 }

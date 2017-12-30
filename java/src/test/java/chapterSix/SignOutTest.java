@@ -1,17 +1,8 @@
 package chapterSix;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class SignOutTest extends TestShopScenario{
 
@@ -31,10 +22,6 @@ public class SignOutTest extends TestShopScenario{
         String text =driver.findElement(By.cssSelector("[class='header_user_info']")).getText();
         //dit geeft mijn naam terug
         System.out.println("de attribute is" + text);
-
-
-
-
 
         boolean isLoggedIn=driver.findElement(By.className("logout")).isDisplayed();
         Assertions.assertThat(isLoggedIn).as("user should be logged in").isTrue();
