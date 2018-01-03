@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -111,14 +112,12 @@ public class MyWishlistsPage {
 
         //accept deletion in  popup
         driver.switchTo().alert().accept();
-
-        //todo dit werkt niet
-        //new WebDriverWait(driver, 2).until(getRowNumber(wishlist)==0);
-        System.out.println("even 2 secondes wachten");
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        System.out.println("2 secondes gewacht");
+        // driver.navigate().refresh();//dit refreshed niet!
+        // driver.findElement(By.id("module-blockwishlist-mywishlist")).sendKeys(Keys.F5);//werkt ook niet altijd
+        //refresh werkt niet dus terug naar my account
+        new WebDriverWait(driver, 10).
+        until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//i[@class='icon-chevron-left']"))).click();
     }
-
 }
 
 

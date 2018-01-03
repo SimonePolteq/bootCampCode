@@ -19,7 +19,7 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
         MyWishlistsPage myWishlistsPage = new MyWishlistsPage(driver);
         PageHeaderPage headAllPagesPage = new PageHeaderPage(driver);
 
-        String wishlist = "Testje"; //todo must wishlist <Feel the pain>
+        String wishlist = "Feel the pain";
 
         //login and check we are indeed logged in
         headAllPagesPage.login("simone@russchen.com", "1qazxsw2");
@@ -47,7 +47,15 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
         //Delete wishlist
         myWishlistsPage.deleteWishlist(wishlist);
 
+
+        homePage.selectMyWishLists();
+
+
+
         //Check deletion was succesfull
-       Assertions.assertThat(myWishlistsPage.isPresentWishlist(wishlist)).as("Wishlist " + wishlist + "should have been deleted").isFalse();
+        System.out.println("en, gelukt?");
+       Assertions.assertThat(myWishlistsPage.isPresentWishlist(wishlist)).
+               as("Wishlist " + wishlist + "should have been deleted").
+               isFalse();
     }
 }
