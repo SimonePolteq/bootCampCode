@@ -18,10 +18,12 @@ public class TestShopScenario {
         //open the website
         driver.get("https://techblog.polteq.com/testshop/index.php");
 
+        driver.manage().window().maximize();
+
     }
 
     @AfterTest
     public void tearDown() {
-       // driver.quit();
+       driver.quit();
     }
 }

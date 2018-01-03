@@ -17,7 +17,7 @@ public class FillInContactFormTest extends TestShopScenarioAdvanced {
         // fill in form & submit
         ContactUsPage contactUsPage = new ContactUsPage(driver);
         contactUsPage.submitForm("Customer service","simone.russchen@polteq.com", " 123","no message");
-//todo de bijlage kan je gewoon een string in zetten
+    //de bijlage kan je gewoon een string in zetten
 
         //Check result
         Assertions.assertThat(contactUsPage.isVisibleSuccessMessage()).as("successmessage Contact Form received is not displayed").isTrue();

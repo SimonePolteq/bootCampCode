@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MyWishlistsPage {
 
@@ -101,11 +102,21 @@ public class MyWishlistsPage {
 
 
     public void deleteWishlist(String wishlist) {
+        //request the rownumber to remove
         int rowNumber = getRowNumber(wishlist);
         System.out.println("delete row:" + rowNumber);
+
+        //delete it
         driver.findElement(By.xpath("//table/tbody/tr[" + rowNumber + "]//i[@class='icon-remove']")).click();
-        //todo switch naar popup
-        driver.switchTo();
+
+        //accept deletion in  popup
+        driver.switchTo().alert().accept();
+
+        //todo dit werkt niet
+        //new WebDriverWait(driver, 2).until(getRowNumber(wishlist)==0);
+        System.out.println("even 2 secondes wachten");
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        System.out.println("2 secondes gewacht");
     }
 
 }

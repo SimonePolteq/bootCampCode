@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 public class FillCartTest extends TestShopScenario{
 
     private void login() {
-        //TODO met parameters username en pw
         driver.findElement(By.className("login")).click();
         driver.findElement(By.id("email")).sendKeys("simone.russchen@polteq.com");
         driver.findElement(By.id("passwd")).sendKeys("bootcamp");
@@ -21,6 +20,9 @@ public class FillCartTest extends TestShopScenario{
     //OEFENING 6.0.2
     public void FillCart() {
         login();
+        Assertions.assertThat(driver.findElement(By.cssSelector("[class='header_user_info']")).getText())
+                .as("user should be logged in")
+                .isNotEqualToIgnoringCase("Sign in");
 
         //Valider dat cart empty is
         System.out.println("aantal producten in cart voor toevoegen=" + driver.findElement(By.className("ajax_cart_no_product")).getText() );
@@ -37,7 +39,6 @@ public class FillCartTest extends TestShopScenario{
         //Click op de naam van <iPod shuffle> zodat de product pagina wordt geopened
         WebElement iPodShuffle;
         iPodShuffle = (new WebDriverWait(driver, 2)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='iPod shuffle']")));
-        //TODO als xpath
         iPodShuffle.click();
 
         //Voeg de <iPod Shuffle> toe aan de cart (Tip: na een paar keer vastlopen, kijk hoger in de DOM)
@@ -53,12 +54,11 @@ public class FillCartTest extends TestShopScenario{
         continueShoppingButton.click();
 
         //Valideer dat er nu 1 product zich in de cart bevindt
-        //TODO element definieren
+
         System.out.println("aantal producten in cart na toevoegen =" + driver.findElement(By.cssSelector("[class='ajax_cart_quantity unvisible']")).getText() );
         Assertions.assertThat(driver.findElement(By.cssSelector("[class='ajax_cart_quantity unvisible']")).getText()).
                 as("Check if cart contains 1 product").
                 isEqualTo("1");
-
     }
 }
 
