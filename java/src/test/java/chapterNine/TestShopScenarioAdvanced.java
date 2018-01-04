@@ -1,10 +1,12 @@
 package chapterNine;
 
-import browser.BrowserFactoryBasic;
-import browser.BrowserFactoryMedior;
+import browser.BrowserFactoryAdvanced;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+
+import static browser.BrowserFactoryAdvanced.Browsers.*;
+;
 
 public class TestShopScenarioAdvanced {
 
@@ -12,7 +14,8 @@ public class TestShopScenarioAdvanced {
 
     @BeforeTest
     public void setUp() {
-        driver= BrowserFactoryMedior.getDriver("chrome");
+        driver= BrowserFactoryAdvanced.getDriver(CHROME);
+
         //driver= BrowserFactoryBasic.getDriver("chrome");
         //open the website
         driver.get("https://techblog.polteq.com/testshop/index.php");
