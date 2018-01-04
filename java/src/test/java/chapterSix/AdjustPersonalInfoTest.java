@@ -15,15 +15,16 @@ public class AdjustPersonalInfoTest extends TestShopScenario {
     private void adjustInfo() {
 
         String password="bootcamp";
+        String email="simone.russchen@polteq.com";
 
         boolean isLoggedIn= ("Sign in".equalsIgnoreCase(driver.findElement(By.cssSelector("[class='header_user_info']")).getText() ));
 
-        if (isLoggedIn){
+        if (!isLoggedIn){
             System.out.println("user is already logged in");
         }
         else {
             System.out.println("user is logged out");
-            login("simone.russchen@polteq.com",password );
+            login(email,password );
         }
 
         //Click op my personal information (icon) om naar de correct pagina te gaan

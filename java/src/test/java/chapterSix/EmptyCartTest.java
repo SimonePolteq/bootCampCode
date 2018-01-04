@@ -42,8 +42,6 @@ public class EmptyCartTest extends TestShopScenario {
         deleteProductIcon.click();
 
         //Valideer dat de cart nu leeg is
-
-
         Assertions.assertThat( new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOfElementLocated(By.className("ajax_cart_no_product"))).getText())
                 .as(" Check if cart is empty" )
                 .isEqualTo("(empty)");

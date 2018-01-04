@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+//OEFENING 6.0.2
 public class FillCartTest extends TestShopScenario{
 
     private void login() {
@@ -17,7 +18,6 @@ public class FillCartTest extends TestShopScenario{
     }
 
     @Test
-    //OEFENING 6.0.2
     public void FillCart() {
         login();
         Assertions.assertThat(driver.findElement(By.cssSelector("[class='header_user_info']")).getText())

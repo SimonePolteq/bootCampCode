@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import pages.LogInPage;
 import pages.PageHeaderPage;
 import pages.HomePage;
 import pages.MyWishlistsPage;
@@ -17,13 +18,14 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
 
         HomePage homePage = new HomePage(driver);
         MyWishlistsPage myWishlistsPage = new MyWishlistsPage(driver);
-        PageHeaderPage headAllPagesPage = new PageHeaderPage(driver);
+        PageHeaderPage pageHeaderPage = new PageHeaderPage(driver);
+        LogInPage logInPage = new LogInPage(driver);
 
         String wishlist = "Feel the pain";
 
         //login and check we are indeed logged in
-        headAllPagesPage.login("simone@russchen.com", "1qazxsw2");
-        //todo deze assert in die methode zetten.
+        pageHeaderPage.selectLogin();
+        logInPage.login("simone@russchen.com", "1qazxsw2");
         Assertions.assertThat(driver.findElement(By.cssSelector("[class='header_user_info']")).getText())
                 .as("user should be logged in")
                 .isNotEqualToIgnoringCase("Sign in");

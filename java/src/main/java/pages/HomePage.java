@@ -23,6 +23,7 @@ public class HomePage {
 
     //methods
     public void selectContactUs() {
+
         contactUsLink.click();
     }
 
