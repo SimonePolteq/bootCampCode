@@ -26,7 +26,9 @@ public class HomePage {
         contactUsLink.click();
     }
 
+    //of: gotoMyWishListpage
     public void selectMyWishLists() {
+
         myWishListsIcon.click();
     }
 }

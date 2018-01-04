@@ -23,12 +23,14 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
 
         //login and check we are indeed logged in
         headAllPagesPage.login("simone@russchen.com", "1qazxsw2");
+        //todo deze assert in die methode zetten.
         Assertions.assertThat(driver.findElement(By.cssSelector("[class='header_user_info']")).getText())
                 .as("user should be logged in")
                 .isNotEqualToIgnoringCase("Sign in");
 
         //ga naar My wishlists & check we are there
         homePage.selectMyWishLists();
+
         Assertions.assertThat(myWishlistsPage.getTextPageHeading())
                .as("Should be on My Wishlists page")
                 .isEqualToIgnoringCase("My wishlists");
@@ -48,14 +50,16 @@ public class DeleteWishListTest extends TestShopScenarioAdvanced {
         myWishlistsPage.deleteWishlist(wishlist);
 
 
+        //back to wisjlist
         homePage.selectMyWishLists();
-
-
 
         //Check deletion was succesfull
         System.out.println("en, gelukt?");
        Assertions.assertThat(myWishlistsPage.isPresentWishlist(wishlist)).
                as("Wishlist " + wishlist + "should have been deleted").
                isFalse();
+
+
+       //TODO de wishlist weer toevoegen om de testomgeving achter te laten zoals je hebt gevonden
     }
 }

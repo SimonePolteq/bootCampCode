@@ -28,24 +28,18 @@ public class MyWishlistsPage {
     @FindBy(xpath = "//h1[@class='page-heading']")
     private WebElement pageHeader;
 
-    @FindBy(xpath = "//table[@class='table table-bordered']")
-    private WebElement tableWishlists;
-
     @FindBy(xpath = "//input[@id='name']")
     private WebElement wishlistField;
 
     @FindBy(xpath ="//button[@id='submitWishlist']")
     private WebElement submitWishlistButton;
 
-    //todo nodig?
-    @FindBy(xpath = "//table[@class='table table-bordered']//th")
-    private WebElement allColumns;
-
-    //todo nodig?
     @FindBy(xpath = "//table[@class='table table-bordered']//tr")
-    private WebElement allRows;
+    private WebElement tableBorderRows;
 
-    //methods
+//TODO webelement tabel=//table....
+
+   //methods
     public String getTextPageHeading() {
           return pageHeader.getText();
     }
@@ -56,6 +50,7 @@ public class MyWishlistsPage {
         submitWishlistButton.click();
     }
 
+    //todo hier (ook) de tabel meegeven
     public boolean isPresentWishlist(String wishlist) {
         List<String> rowsList= createArrayListOfRowsHeaders();
 
@@ -69,8 +64,8 @@ public class MyWishlistsPage {
          return isPresent;
     }
 
+    //todo hier (ook) de tabel meegeven
     private int getRowNumber(String wishlist) {
-        //todo moet ik deze echt steeds opnieuw maken
         List<String> rows= createArrayListOfRowsHeaders();
         int rowNumber=0;
         for (int i=0; i < rows.size();i++) {
@@ -80,18 +75,24 @@ public class MyWishlistsPage {
                 System.out.println(wishlist + " is in row number:" + rowNumber);
             }
         }
-
+//todo: exception als niet gevonden
         return rowNumber;
     }
 
     private List<String> createArrayListOfRowsHeaders() {
-        //todo nog met hiervboven gedefineerde elementen
-        //count number of rows and print to console
+        //TODO geef de tabel mee, zodat je niet met driver hoeft te werken,
+        //TODO dan krijg je dus zoiets:
+        //List<table> rows = table.findElements(By.xpath("//[@class='table table-bordered']//tr"));
+        //je hebt dan ook geen last van element die er niet meer is in tabel maar wel in dom
+        //behalve dat je de tabel elke keer opnieuw moet ophalen als je er een wijziging in aanbrengt (stale)
+        //en de bedoeling was om ook door kolommen te itereren
+
         List<WebElement> rows = driver.findElements(By.xpath("//table[@class='table table-bordered']//tr"));
-        System.out.println("number of rows in table= " + rows.size());
+        //count number of rows and print to console
+        //List<WebElement> rows = driver.tableBorderRows;
+         System.out.println("number of rows in table= " + rows.size());
 
         //create list with headers and print row headers to console
-        //todo row numbers hier is lelijk
         List<String> rowsHeaders = new ArrayList<>();
         for (int i = 1; i < rows.size(); i++) {
             rowsHeaders.add(driver.findElement(By.xpath("//table/tbody//tr[" + i + "]//a")).getText());
@@ -100,7 +101,6 @@ public class MyWishlistsPage {
         }
         return rowsHeaders;
     }
-
 
     public void deleteWishlist(String wishlist) {
         //request the rownumber to remove
@@ -112,7 +112,7 @@ public class MyWishlistsPage {
 
         //accept deletion in  popup
         driver.switchTo().alert().accept();
-        // driver.navigate().refresh();//dit refreshed niet!
+        // driver.navigate().refresh();//dit refreshed niet! (dat doet inderdaad niet)
         // driver.findElement(By.id("module-blockwishlist-mywishlist")).sendKeys(Keys.F5);//werkt ook niet altijd
         //refresh werkt niet dus terug naar my account
         new WebDriverWait(driver, 10).
