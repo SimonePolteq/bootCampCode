@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import java.util.List;
 
-public class ValidateSupplierProductTest extends TestShopScenario {
+    public class ValidateSupplierProductTest extends TestShopScenario {
 
     @Test
     //OEFENING 6.0.5

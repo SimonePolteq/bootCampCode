@@ -16,16 +16,14 @@ public class ContactUsPage {
         PageFactory.initElements(driver, this);
     }
 
-    //Onder suppliers, verander de selectbox naar <AppleStore>
     @FindBy(css = "select[name=id_contact]")
     private WebElement subjectHeading;
 
-    //@FindBy(css = "input[id=email]")
-    //@FindBy(id="email")
     @FindBy(xpath = "//input[@id='email']")
     private WebElement emailField;
 
-    @FindBy(css = " input[id=id_order]")
+    //warning: if logged in this field is a dropdown and thus another element!
+    @FindBy(xpath = "//input[@name='id_order']")
     private WebElement orderReferenceField;
 
     @FindBy(css = "textarea[id=message]")
@@ -37,19 +35,58 @@ public class ContactUsPage {
     @FindBy(className = "alert-success")
     private WebElement succesMessage;
 
-    public void submitForm(String subject, String email, String orderReference, String message) {
-        Select dropdown = new Select(subjectHeading);
-        dropdown.selectByVisibleText(subject);
+    @FindBy(xpath = "//div[@class='alert alert-danger']")
+    private WebElement errorMessage;
 
-        //of in 1 regel: new Select(subjectHeading).selectByVisibleText(subject);
+    @FindBy(xpath = "//div[@class='alert alert-danger']//li")
+    private WebElement errorText;
 
-        emailField.sendKeys(email);
-        orderReferenceField.sendKeys(orderReference);
-        messageField.sendKeys(message);
+    @FindBy(xpath = "//p[@class='form-group form-error']")
+    private WebElement fieldErrorEmail;
+
+
+    //METHODS
+    public void fillInAndsubmitForm(String subject, String email, String orderReference, String message) {
+        fillInForm(subject, email, orderReference, message);
         submitButton.click();
     }
 
+    public void submitForm() {
+        submitButton.click();
+    }
+
+    //de bijlage kan je gewoon een string in zetten //TODO
+    public void fillInForm(String subject, String email, String orderReference, String message) {
+        clearFields();
+        new Select(subjectHeading).selectByVisibleText(subject);
+        emailField.sendKeys(email);
+        orderReferenceField.sendKeys(orderReference);
+        messageField.sendKeys(message);
+    }
+
     public boolean isVisibleSuccessMessage() {
+
         return succesMessage.isDisplayed();
+    }
+
+    public boolean isVisibleErrorMessage() {
+
+        return errorMessage.isDisplayed();
+    }
+
+    public String getTextErrorMessage() {
+        return errorText.getText();
+    }
+
+    public void clearFields() {
+        emailField.clear();
+        orderReferenceField.clear();
+        messageField.clear();
+    }
+
+
+    public boolean isVisibleFieldError() {
+
+        return fieldErrorEmail.isDisplayed();
     }
 }

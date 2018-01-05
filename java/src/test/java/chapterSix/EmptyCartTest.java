@@ -14,31 +14,37 @@ public class EmptyCartTest extends TestShopScenario {
     public void FillCart() {
 
         login("simone.russchen@polteq.com", "bootcamp");
+        Assertions.assertThat(driver.findElement(By.cssSelector("[class='header_user_info']")).getText())
+                .as("user should be logged in")
+                .isNotEqualToIgnoringCase("Sign in");
 
         //element alleen displayed indien leeg
-        boolean isEmpty = driver.findElement(By.className("ajax_cart_no_product")).isDisplayed();
-        if (isEmpty) {
+        String cartContent = driver.findElement(By.className("ajax_cart_no_product")).getText();
+        if (cartContent.equalsIgnoreCase("(empty)")) {
             System.out.println("card is empty so need to add product");
             addProductToCart();
-
-        } else {
+            //check product is added
+            Assertions.assertThat(driver.findElement(By.xpath("//span[@class='ajax_cart_quantity unvisible']")).getText())
+                    .as("product should have been added")
+                    .isEqualTo("1");
+        }
+        else {
             System.out.println("product already in card so no need to add one");
             //do nothing else
         }
 
         //Click op de cart
-        //TODO deze werkt nog niet
-        WebElement cart = (new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[title='View my shopping cart']")));
+        WebElement cart = (new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@title='View my shopping cart']")));
         cart.click();
 
         //Verwijder de item
-        WebElement deleteProductIcon = driver.findElement(By.cssSelector("[title='remove this product from my cart']"));
+        WebElement deleteProductIcon = (new WebDriverWait(driver, 5)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//i[@class='icon-trash']")));
+        deleteProductIcon.click();
 
         //Valideer dat de cart nu leeg is
-        String TextActual = driver.findElement(By.className("ajax_cart_no_product")).getText();
-        String TextExpected = "(empty)";
-        String TextError = "Check if cart is empty";
-        Assertions.assertThat(TextActual).as(TextError).isEqualTo(TextExpected);
+        Assertions.assertThat( new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOfElementLocated(By.className("ajax_cart_no_product"))).getText())
+                .as(" Check if cart is empty" )
+                .isEqualTo("(empty)");
     }
 
     private void login(String email, String password) {
@@ -57,7 +63,6 @@ public class EmptyCartTest extends TestShopScenario {
             //Click op de naam van <iPod shuffle> zodat de product pagina wordt geopened
             WebElement iPodShuffle;
             iPodShuffle = (new WebDriverWait(driver, 2)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='iPod shuffle']")));
-            //TODO als xpath
             iPodShuffle.click();
 
             //Voeg de <iPod Shuffle> toe aan de cart (Tip: na een paar keer vastlopen, kijk hoger in de DOM)

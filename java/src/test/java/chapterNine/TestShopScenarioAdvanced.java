@@ -1,27 +1,32 @@
 package chapterNine;
 
-import browser.BrowserFactory;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
+import browser.BrowserFactoryAdvanced;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+
+import static browser.BrowserFactoryAdvanced.Browsers.*;
+
 
 public class TestShopScenarioAdvanced {
 
     protected WebDriver driver;
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp() {
-        driver=BrowserFactory.getDriver("chrome");
+        driver= BrowserFactoryAdvanced.getDriver(CHROME);
 
+        //driver= BrowserFactoryBasic.getDriver("chrome");
         //open the website
         driver.get("https://techblog.polteq.com/testshop/index.php");
         driver.manage().window().maximize();
+        //todo
+       // WebDriverWait wait = new WebDriver.Timeouts(driver,10);
     }
 
-    @AfterTest
+    @AfterMethod
     public void tearDown() {
-       driver.quit();
+        driver.quit();
     }
 }

@@ -22,7 +22,7 @@ public class FirstSeleniumTest2 {
 
     @AfterTest
     private void tearDown() {
-       // driver.quit();
+       driver.quit();
     }
 
     @Test

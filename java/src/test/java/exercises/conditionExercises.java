@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class conditionExercises {
+public class ConditionExercises {
 
     private List<Integer> testData;
 
@@ -18,10 +18,10 @@ public class conditionExercises {
         for(int i=0; i< testData.size(); i++) {
             System.out.println("test with age= " +testData.get(i));
             String tekst=bootcampAgeChecker(testData.get(i));
-            System.out.println(tekst);
+            System.out.println(
+tekst);
         }
     }
-
     private String bootcampAgeChecker(int age) {
         String outputText;
         if (age>=21 && age<65){
