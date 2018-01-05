@@ -1,33 +1,30 @@
-package chapterNine;
+package browserDriven;
 
 import browser.BrowserFactoryAdvanced;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+
+import static browser.BrowserFactoryAdvanced.Browsers.CHROME;
 
 
-import static browser.BrowserFactoryAdvanced.Browsers.*;
-
-
-public class TestShopScenarioAdvanced {
+public class TestShopScenarioAdvancedBrowserDriven {
 
     protected WebDriver driver;
 
+    @Parameters("browser")
     @BeforeMethod
-    public void setUp() {
-        driver= BrowserFactoryAdvanced.getDriver(CHROME);
+    public void setUp(BrowserFactoryAdvanced.Browsers browser) { //de parameter is de enum uit de class BrowserFactoryAdvanced
+        driver= BrowserFactoryAdvanced.getDriver(browser);
 
-        //driver= BrowserFactoryBasic.getDriver("chrome");
         //open the website
         driver.get("https://techblog.polteq.com/testshop/index.php");
         driver.manage().window().maximize();
-        //todo
-       // WebDriverWait wait = new WebDriver.Timeouts(driver,10);
     }
 
     @AfterMethod
     public void tearDown() {
-
         driver.quit();
     }
 }
