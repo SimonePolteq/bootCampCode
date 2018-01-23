@@ -5,6 +5,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import javax.xml.xpath.XPath;
+
 
 public class LogInPage {
 
@@ -29,13 +31,17 @@ public LogInPage(WebDriver driver) {
 
     @FindBy(xpath = "//div[@class='alert alert-danger']//li")
     private WebElement alertMessageText;
-    //todo check if specifiek genoeg
+    //possibly not specific enough
 
     @FindBy(xpath = "//div[@class='form-group form-error']")
     private WebElement fieldError;
 
+    @FindBy (xpath= "//input[@id='email_create']")
+    private WebElement fieldEmailCreate;
 
-//todo refcator name
+    @FindBy (xpath = "//button[@name='SubmitCreate']")
+    private WebElement buttonSubmitCreate;
+
     public void login(String email, String password) {
 
         fillInLoginFields(email, password);
@@ -56,6 +62,12 @@ public LogInPage(WebDriver driver) {
     public boolean isVisibleFieldError() {
 
         return fieldError.isDisplayed();
+    }
+
+    public void createAccount(String email) {
+        fieldEmailCreate.clear();
+        fieldEmailCreate.sendKeys(email);
+        buttonSubmitCreate.click();
     }
 }
 

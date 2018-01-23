@@ -1,7 +1,6 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,9 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MyWishlistsPage {
 
@@ -34,14 +31,13 @@ public class MyWishlistsPage {
     @FindBy(xpath ="//button[@id='submitWishlist']")
     private WebElement submitWishlistButton;
 
-    @FindBy(xpath = "//table[@class='table table-bordered']//tr")
-    private WebElement tableBorderRows;
+    @FindBy(xpath = "//table[@class='table table-bordered']")
+    private WebElement wishListTable;
 
-//TODO webelement tabel=//table....
-
-   //methods
+    //methods
     public String getTextPageHeading() {
-          return pageHeader.getText();
+
+        return pageHeader.getText();
     }
 
     public void createNewWishlist(String wishlist) {
@@ -50,74 +46,50 @@ public class MyWishlistsPage {
         submitWishlistButton.click();
     }
 
-    //todo hier (ook) de tabel meegeven
-    public boolean isPresentWishlist(String wishlist) {
-        List<String> rowsList= createArrayListOfRowsHeaders();
+    public WebElement getWishListTable() {
+        return wishListTable;
+    }
 
-        boolean isPresent = false;
-             for (int i=0; i < rowsList.size();i++) {
-                if (rowsList.get(i).equals(wishlist)) {
-                    isPresent = true;
-                      //todo break als gevonden
+    public int getIndexForColumn(String columnTitle) {
+        List<WebElement> rowsInTable = wishListTable.findElements(By.tagName("tr"));
+        List<WebElement> headerRowInTable = rowsInTable.get(0).findElements(By.tagName("th"));
+        //Get the index for a particular column. We achieve this by looping
+            // over the List from the headerRowInTable containing the column
+            int columnIndex = -1;
+
+            for (int i = 0; i < headerRowInTable.size(); i++) {
+                //System.out.println("looking for index column \"" + columnTitle + "\" " + headerRowInTable.get(i).getText());
+                if (headerRowInTable.get(i).getText().equals(columnTitle)) {
+                    columnIndex = i;
+                    System.out.println("index for column " + columnTitle + " = " + columnIndex);
                 }
             }
-         return isPresent;
-    }
 
-    //todo hier (ook) de tabel meegeven
-    private int getRowNumber(String wishlist) {
-        List<String> rows= createArrayListOfRowsHeaders();
-        int rowNumber=0;
-        for (int i=0; i < rows.size();i++) {
-            if (rows.get(i).equals(wishlist)) {
-                rowNumber=i+1;
-                //todo break als gevonden
-                System.out.println(wishlist + " is in row number:" + rowNumber);
+            //TODO Assert that both Name and Delete have been found
+            //alleen assert werkt niet op page
+            //Assertions.assertThat(columnIndex > -1)
+            //        .as("Check if Name and Delete were found in the headerRow")
+            //        .isTrue();
+
+            return columnIndex;
+
+            //todo als je iets zoekt dat er niet is krijg je indexOutOfBounds
+        }
+
+
+        public boolean isPresentWishlist(String wishlist) {
+            List<WebElement> rowsInTable = wishListTable.findElements(By.tagName("tr"));
+            List<WebElement> headerRowInTable = rowsInTable.get(0).findElements(By.tagName("th"));
+            int indexForColumnName=getIndexForColumn("Name");
+            boolean isPresent = false;
+
+            for (int i=1; i < rowsInTable.size();i++) {
+                List<WebElement> wishListColumn = rowsInTable.get(i).findElements(By.tagName("td"));
+
+                if (wishListColumn.get(indexForColumnName).getText().equals(wishlist)){
+                    isPresent = true;
+                }
             }
+            return isPresent;
         }
-//todo: exception als niet gevonden
-        return rowNumber;
     }
-
-    private List<String> createArrayListOfRowsHeaders() {
-        //TODO geef de tabel mee, zodat je niet met driver hoeft te werken,
-        //TODO dan krijg je dus zoiets:
-        //List<table> rows = table.findElements(By.xpath("//[@class='table table-bordered']//tr"));
-        //je hebt dan ook geen last van element die er niet meer is in tabel maar wel in dom
-        //behalve dat je de tabel elke keer opnieuw moet ophalen als je er een wijziging in aanbrengt (stale)
-        //en de bedoeling was om ook door kolommen te itereren
-
-        List<WebElement> rows = driver.findElements(By.xpath("//table[@class='table table-bordered']//tr"));
-        //count number of rows and print to console
-        //List<WebElement> rows = driver.tableBorderRows;
-         System.out.println("number of rows in table= " + rows.size());
-
-        //create list with headers and print row headers to console
-        List<String> rowsHeaders = new ArrayList<>();
-        for (int i = 1; i < rows.size(); i++) {
-            rowsHeaders.add(driver.findElement(By.xpath("//table/tbody//tr[" + i + "]//a")).getText());
-            //print tablebody
-            //System.out.println("row nr" + i + " = " + rowsHeaders.get(i-1));//because body starts at 2nd row
-        }
-        return rowsHeaders;
-    }
-
-    public void deleteWishlist(String wishlist) {
-        //request the rownumber to remove
-        int rowNumber = getRowNumber(wishlist);
-        System.out.println("delete row:" + rowNumber);
-
-        //delete it
-        driver.findElement(By.xpath("//table/tbody/tr[" + rowNumber + "]//i[@class='icon-remove']")).click();
-
-        //accept deletion in  popup
-        driver.switchTo().alert().accept();
-        // driver.navigate().refresh();//dit refreshed niet! (dat doet inderdaad niet)
-        // driver.findElement(By.id("module-blockwishlist-mywishlist")).sendKeys(Keys.F5);//werkt ook niet altijd
-        //refresh werkt niet dus terug naar my account
-        new WebDriverWait(driver, 10).
-        until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//i[@class='icon-chevron-left']"))).click();
-    }
-}
-
-

@@ -43,7 +43,7 @@ public class BrowserFactoryBasic {
     }
 
     //in aparte methodes om de switch leesbaar te houden.
-    //todo uitbreiden zie de slide 45 (pdf 9)
+    //zie browserfactory advanced voor uitbreiding
     private static WebDriver getFirefoxDriver() {
         FirefoxDriverManager.getInstance().setup();
         return driver = new FirefoxDriver();

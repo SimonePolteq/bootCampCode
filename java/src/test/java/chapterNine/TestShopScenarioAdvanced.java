@@ -21,7 +21,7 @@ public class TestShopScenarioAdvanced {
         //open the website
         driver.get("https://techblog.polteq.com/testshop/index.php");
         driver.manage().window().maximize();
-        //todo
+        //
        // WebDriverWait wait = new WebDriver.Timeouts(driver,10);
     }
 

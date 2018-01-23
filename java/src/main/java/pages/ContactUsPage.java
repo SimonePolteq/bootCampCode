@@ -13,6 +13,7 @@ public class ContactUsPage {
 
     public ContactUsPage(WebDriver driver) {
         this.driver = driver;
+        // This call sets the WebElement fields.
         PageFactory.initElements(driver, this);
     }
 
@@ -55,7 +56,7 @@ public class ContactUsPage {
         submitButton.click();
     }
 
-    //de bijlage kan je gewoon een string in zetten //TODO
+    //de bijlage kan je gewoon een string in zetten
     public void fillInForm(String subject, String email, String orderReference, String message) {
         clearFields();
         new Select(subjectHeading).selectByVisibleText(subject);
